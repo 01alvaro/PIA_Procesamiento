@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+/* ========== VENTANA EQUIPO ========== */
+.equipo {
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* BOTONES ARRIBA */
+.top-botones {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 350px 20px 20px;
+}
+
+.top-botones button {
+    padding: 15px 50px;
+    border: 1px solid #2c8bd8;
+    border-radius: 20px;
+    background-color: #1e293b; 
+    color: #ebecee;
+    font-size: 30px;
+    font-weight: 600;
+    cursor: pointer;
+   
+    box-shadow: 0 0 15px rgba(54, 221, 198, 0.5);
+}
+
+
+/* CONTENIDO CENTRAL */
+.contenido-equipo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ESTILO PARA EL MODELO 3D */
+.modelo-bandera {
+    width: 100%;
+    max-width: 900px;
+    height: 700px;
+    background-color: transparent;
+    margin-top: -50px;
+}
+
+@keyframes reboteBalon3D {
+    0% {
+        transform: translate(-50%, -50%) translateY(-300px); /* arriba fuera de pantalla */
+        opacity: 1;
+    }
+    60% {
+        transform: translate(-50%, -50%) translateY(150px); /* cae hasta abajo */
+    }
+    75% {
+        transform: translate(-50%, -50%) translateY(80px); /* rebota hacia arriba */
+    }
+    90% {
+        transform: translate(-50%, -50%) translateY(150px); /* vuelve a caer */
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) translateY(150px);
+        opacity: 0; /* desaparece */
+    }
+}
+
+/* BOTON REGRESAR */
+.btn-regresar {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 25px;
+    background-color: #36ddc6;
+    color: #1e293b;
+    border: none;
+    border-radius: 50px;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+/* ========== MODAL VIDEO YOUTUBE ========== */
+.modal-fondo {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro */
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-contenido {
+    background: #1e293b;
+    border: 2px solid #36ddc6;
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(54, 221, 198, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cerrar-modal {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: #94a3b8;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.video-responsive {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Mantiene la forma rectangular de YouTube */
+    margin-top: 20px;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* FILTROS DE VIDEO ABAJO */
+.filtros-video {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-filtro {
+    padding: 8px 15px;
+    background: #1e293b;
+    color: #36ddc6;
+    border: 1px solid #36ddc6;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-filtro:hover, .btn-filtro.activo {
+    background: #36ddc6;
+    color: #1e293b;
+}
+
+/* ========== RESPONSIVE MOBILE ========== */
+@media (max-width: 768px) {
+    .top-botones {
+        padding: 40px 10px 10px; /* Reducido el espacio superior gigante */
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .top-botones button {
+        font-size: 14px;
+        padding: 8px 15px;
+    }
+    .modelo-bandera {
+        height: 50vh; /* Ajuste para que el modelo 3D no ocupe toda la pantalla */
+        margin-top: 0;
+    }
+    .btn-regresar {
+        font-size: 16px;
+        padding: 10px 20px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+ 

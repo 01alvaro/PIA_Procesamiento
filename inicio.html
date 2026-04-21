@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Scan</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Importar componente model-viewer -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <style>
+        /* Hacemos el fondo transparente para ver el video detrás */
+        body {
+            background: transparent !important;
+        }
+        /* Estilo para que el video ocupe toda la pantalla detrás del contenido */
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <video id="video-background" autoplay muted playsinline></video>
+    
+    <div class="inicio">
+        <!-- Reemplazo de imagen por modelo 3D -->
+        <!-- Ruta actualizada a la carpeta assets -->
+        <model-viewer 
+            src="modelos/mundo.glb" 
+            alt="Mundo 3D"
+            auto-rotate
+            camera-controls
+            shadow-intensity="1"
+            class="mundo"
+        ></model-viewer>
+    </div>
+
+     <!-- ESTE ES EL CÓDIGO DEL MODAL (Pégalo al final de tu body) -->
+<div id="modalManual" class="modal-fondo">
+    <div class="modal-contenido">
+        <span class="cerrar-modal" onclick="cerrarManual()">&times;</span>
+        <h2 style="color: #36ddc6; margin-top: 0;">¿Cómo usar la App?</h2>
+        
+        <ul class="lista-instrucciones">
+            <li>1. Presiona <b>Inicio</b> para abrir la cámara.</li>
+            <li>2. Apunta a la bandera del equipo que quieras analizar.</li>
+            <li>3. Presiona uno de los 3 botones y explora las <b>Estadísticas, videos</b> o tambien conoce a los <b>Jugadores</b></li>
+            <li>4.para regresar presiona el boton de regresar.</li>
+            <li>5. ¡Diviértete !</li>
+        </ul>
+
+        <button class="btn" style="padding: 10px 30px; font-size: 16px; background-color: #36ddc6; color: #1e293b;" onclick="cerrarManual()">Entendido</button>
+    </div>
+</div>
+
+    <div class="botones">
+        <button class="btn izquierda" onclick="window.location.href='./public/index.html'">Inicio</button>
+        <button class="btn derecha" onclick="abrirManual()">Manual</button>
+    </div>
+    
+    <script>
+        // Funciones para controlar el Modal del Manual
+        function abrirManual() {
+            document.getElementById("modalManual").style.display = "flex";
+        }
+
+        function cerrarManual() {
+            document.getElementById("modalManual").style.display = "none";
+        }
+
+        // Cerrar si se hace clic fuera de la ventana del modal
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("modalManual")) {
+                cerrarManual();
+            }
+        }
+
+        // Script para activar la cámara como fondo
+        window.addEventListener('load', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "environment" } 
+                });
+                document.getElementById('video-background').srcObject = stream;
+            } catch (error) {
+                console.error("Error al acceder a la cámara:", error);
+            }
+        });
+    </script>
+</body>
+</html>

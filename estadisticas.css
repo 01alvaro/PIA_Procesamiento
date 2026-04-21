@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap');
+
+.titulo-pagina {
+    color: #36ddc6;
+    margin-top: 30px;
+    font-size: 55px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px rgba(54, 221, 198, 0.3);
+    text-align: center;
+    width: 100%;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    box-sizing: border-box;
+    margin: 0 auto; /* Esto centra todo el bloque de cuadros horizontalmente */
+}
+
+/* TARJETAS */
+.stat-card {
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(10px); /* Efecto cristal / difuminado */
+    border: 1px solid rgba(54, 221, 198, 0.4);
+    border-radius: 20px;
+    flex: 1 1 200px; /* Permite que se adapten, tamaño base 200px */
+    max-width: 220px; /* Reducimos el ancho máximo para que no sean gigantes */
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra elegante oscura */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(54, 221, 198, 0.25); /* Brillo sutil al interactuar */
+}
+
+.stat-card h3 {
+    margin-top: 0;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 18px; /* Reducimos el tamaño del título */
+    letter-spacing: 1px;
+}
+
+/* NÚMEROS GRANDES */
+.numero-grande {
+    font-size: 45px; /* Ajustamos para que no desborde */
+    font-weight: 800;
+    color: white;
+    margin: 10px 0;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.877);
+}
+
+.subtexto, .detalle-stat {
+    color: #cbd5e1;
+    font-size: 15px; /* Subtítulos más discretos y proporcionales */
+}
+
+.detalle-stat {
+    display: flex;
+    justify-content: space-around;
+    font-weight: 600;
+}
+
+/* CÍRCULO DE POSESIÓN */
+.circulo-progreso {
+    width: 80px; /* Circulo más compacto */
+    height: 80px;
+    border-radius: 50%;
+    border: 6px solid #36ddc6;
+    border-right-color: rgba(255, 255, 255, 0.774); /* Efecto de "incompleto" */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(54, 221, 198, 0.4);
+}
+
+/* TRIVIA / PREGUNTAS */
+.trivia-container {
+    margin: 50px auto 0; /* Restauramos los 50px de separación superior */
+    transform: translateX(-10px); /* NÚMERO NEGATIVO = mueve a la izquierda */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 75%;
+    padding-bottom: 80px; /* Espacio extra para que no choque con el botón regresar */
+}
+
+.pregunta-box {
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(54, 221, 198, 0.4);
+    text-align: center;
+    width: 90%;
+    max-width: 500px; /* Más ancha para que el texto se acomode mejor */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.pregunta-texto {
+    color: white;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.opciones-grid {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-opcion {
+    padding: 12px 25px;
+    background: rgba(30, 41, 59, 0.6);
+    border: 2px solid rgba(54, 221, 198, 0.6);
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.btn-opcion:hover {
+    background: rgba(54, 221, 198, 0.2);
+    border-color: #36ddc6;
+    transform: scale(1.05); /* Efecto de crecimiento al tocar/pasar el ratón */
+}
+
+/* ========== RESPONSIVE MOBILE ========== */
+@media (max-width: 768px) {
+    .trivia-container {
+        flex-direction: column;
+        margin-top: 20px;
+        gap: 20px;
+    }
+    .stats-container {
+        padding: 20px;
+    }
+    .titulo-pagina {
+        font-size: 32px;
+        margin-top: 30px;
+    }
+    .stat-card { max-width: 100%; } /* En celular toman el ancho disponible */
+    .numero-grande { font-size: 35px; }
+    .pregunta-texto { font-size: 20px; }
+    .btn-opcion { padding: 10px 15px; font-size: 14px; }
+}
