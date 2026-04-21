@@ -1,98 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Scan AR</title>
-
-<script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-aframe.prod.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<style>
-body { margin: 0; overflow: hidden; }
-
-.ui-overlay{
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    z-index:1000;
-    display:none;
-    color:white;
-}
-
-#ui-escaner{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-button{
-    padding:10px;
-    margin:5px;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Scan</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Importar componente model-viewer -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <style>
+        /* Hacemos el fondo transparente para ver el video detrás */
+        body {
+            background: transparent !important;
+        }
+        /* Estilo para que el video ocupe toda la pantalla detrás del contenido */
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+    </style>
 </head>
-
 <body>
+    <video id="video-background" autoplay muted playsinline></video>
+    
+    <div class="inicio">
+        <!-- Reemplazo de imagen por modelo 3D -->
+        <!-- Ruta actualizada a la carpeta assets -->
+        <model-viewer 
+            src="modelos/mundo.glb" 
+            alt="Mundo 3D"
+            auto-rotate
+            camera-controls
+            shadow-intensity="1"
+            class="mundo"
+        ></model-viewer>
+    </div>
 
-<!-- ESCENA AR -->
-<a-scene
-mindar-image="imageTargetSrc: ./assets/targets.mind; maxTrack:1; filterMinCF:0.0001; filterBeta:0.01;"
-color-space="sRGB"
-renderer="colorManagement: true, physicallyCorrectLights"
-vr-mode-ui="enabled: false"
-device-orientation-permission-ui="enabled: false"
->
+     <!-- ESTE ES EL CÓDIGO DEL MODAL (Pégalo al final de tu body) -->
+<div id="modalManual" class="modal-fondo">
+    <div class="modal-contenido">
+        <span class="cerrar-modal" onclick="cerrarManual()">&times;</span>
+        <h2 style="color: #36ddc6; margin-top: 0;">¿Cómo usar la App?</h2>
+        
+        <ul class="lista-instrucciones">
+            <li>1. Presiona <b>Inicio</b> para abrir la cámara.</li>
+            <li>2. Apunta a la bandera del equipo que quieras analizar.</li>
+            <li>3. Presiona uno de los 3 botones y explora las <b>Estadísticas, videos</b> o tambien conoce a los <b>Jugadores</b></li>
+            <li>4.para regresar presiona el boton de regresar.</li>
+            <li>5. ¡Diviértete !</li>
+        </ul>
 
-<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
-
-<!-- 🇲🇽 MÉXICO -->
-<a-entity id="target-mexico" mindar-image-target="targetIndex:4">
-    <a-entity 
-        gltf-model="../modelos/bandera de mexico.glb"
-        scale="0.5 0.5 0.5">
-    </a-entity>
-</a-entity>
-
-<!-- 🇯🇵 JAPÓN -->
-<a-entity id="target-japon" mindar-image-target="targetIndex:3">
-    <a-entity 
-        gltf-model="../modelos/bandera de japon.glb"
-        scale="0.5 0.5 0.5">
-    </a-entity>
-</a-entity>
-
-</a-scene>
-
-<!-- UI ESCANER -->
-<div id="ui-escaner" class="ui-overlay">
-    <h1>Apunta a una bandera</h1>
+        <button class="btn" style="padding: 10px 30px; font-size: 16px; background-color: #36ddc6; color: #1e293b;" onclick="cerrarManual()">Entendido</button>
+    </div>
 </div>
 
-<!-- UI INFO -->
-<div id="ui-info" class="ui-overlay">
-    <h1 id="titulo"></h1>
+    <div class="botones">
+        <button class="btn izquierda" onclick="window.location.href='public/index.html'">Inicio</button>
+        <button class="btn derecha" onclick="abrirManual()">Manual</button>
+    </div>
+    
+    <script>
+        // Funciones para controlar el Modal del Manual
+        function abrirManual() {
+            document.getElementById("modalManual").style.display = "flex";
+        }
 
-    <button onclick="abrirStats()">Estadísticas</button>
-    <button onclick="abrirJugadores()">Jugadores</button>
-    <button onclick="cerrarTodo()">Cerrar</button>
-</div>
+        function cerrarManual() {
+            document.getElementById("modalManual").style.display = "none";
+        }
 
-<!-- UI STATS -->
-<div id="ui-stats" class="ui-overlay">
-    <h2>Estadísticas</h2>
-    <p id="stats"></p>
-    <button onclick="volver()">Regresar</button>
-</div>
+        // Cerrar si se hace clic fuera de la ventana del modal
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("modalManual")) {
+                cerrarManual();
+            }
+        }
 
-<!-- UI JUGADORES -->
-<div id="ui-jugadores" class="ui-overlay">
-    <h2>Jugadores</h2>
-    <div id="lista"></div>
-    <button onclick="volver()">Regresar</button>
-</div>
-
-<script src="./js/script.js"></script>
-
+        // Script para activar la cámara como fondo
+        window.addEventListener('load', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "environment" } 
+                });
+                document.getElementById('video-background').srcObject = stream;
+            } catch (error) {
+                console.error("Error al acceder a la cámara:", error);
+            }
+        });
+    </script>
 </body>
 </html>
